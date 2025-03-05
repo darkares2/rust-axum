@@ -4,13 +4,22 @@ mod api;
 use api::configure;
 mod server_serve;
 mod settings;
+mod application_state;
+mod services;
 use crate::server_serve::server_serve;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let settings = settings::Settings::new("config.json", "APP")?;
-    let shared_settings = Arc::new(settings);
-    let app = configure(shared_settings.clone());
-    server_serve(app, shared_settings).await?;
+    let db_url = settings
+    .database
+    .url
+    .clone()
+    .expect("Database URL is not set");
+    let pool = sqlx::MySqlPool::connect(&db_url).await?;
+    let application_state = Arc::new(application_state::ApplicationState::new(&settings, pool)?);
+    
+    let app = configure(application_state.clone());
+    server_serve(app, application_state).await?;
     Ok(())
 }

@@ -1,6 +1,6 @@
 {
     "database": {
-        "url": "pgsql://"
+        "url": "mysql://rasputin:rasputin@127.0.0.1/rust-axum"
     },
     "server": {
         "address": "127.0.0.1",

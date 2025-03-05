@@ -9,12 +9,15 @@ pub struct CustomMessage {
  message: String,
 }
 
-use crate::settings::Settings;
+use crate::application_state::ApplicationState;
 
-pub async fn test(State(settings): State<Arc<Settings>>) -> Json<CustomMessage> {
-    let db_url = settings.database.url.clone().unwrap_or_else(|| "Database URL is missing".to_string());
- let msg = CustomMessage {
-    message: format!("Hello, World! Database URL: {}", db_url),
- };
- Json(msg)
+pub async fn test(State(state): State<Arc<ApplicationState>>) -> Json<CustomMessage> {
+
+   let db_url = Arc::clone(&state).settings.load().database.url.clone().unwrap_or_else(|| "Database URL is missing".to_string());
+   //let db_url = state.arc().settings.load().database.url.clone().unwrap_or_else(|| "Database URL is missing".to_string());
+   // let db_url = state.settings.database.url.clone().unwrap_or_else(|| "Database URL is missing".to_string());
+   let msg = CustomMessage {
+      message: format!("Hello, World! Database URL: {}", db_url),
+   };
+   Json(msg)
 }

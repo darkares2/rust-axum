@@ -1,2 +1,4 @@
 /target
 .vscode/
+/sqlx/data
+.sqlx

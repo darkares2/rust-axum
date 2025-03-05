@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rust-axum
+      MYSQL_USER: rasputin
+      MYSQL_PASSWORD: rasputin
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"

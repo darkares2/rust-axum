@@ -1,8 +1,5 @@
-use sqlx::types::chrono::DateTime;
-use sqlx::types::chrono::Utc;
 use serde::{Serialize, Deserialize};
-use chrono::serde::ts_milliseconds;
-use chrono::serde::ts_milliseconds_option;
+use chrono::{DateTime, Utc};
 
 #[derive(Copy, Clone, Serialize, Deserialize)]
 pub enum UserStatus {
@@ -39,11 +36,8 @@ pub struct User {
     pub username: String,
     pub password: String,
     pub status: UserStatus,
-    #[serde(with = "ts_milliseconds")]
     pub created: DateTime<Utc>,
-    #[serde(with = "ts_milliseconds")]
     pub updated: DateTime<Utc>,
-    #[serde(with = "ts_milliseconds_option")]
     pub last_login: Option<DateTime<Utc>>,
 }
 

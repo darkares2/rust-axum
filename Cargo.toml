@@ -14,10 +14,8 @@ serde_json = "1.0.140"
 tokio = { version = "1.43.0", features = ["rt-multi-thread"] }
 tower-http = { version = "0.6.2", features = ["fs"] }
 sqlx = { version = "0.8.3", features = [ "mysql", "runtime-tokio", 
- "tls-rustls", "chrono", "macros" ] }
-num = "0.4"
-num-derive = "0.4"
-num-traits = "0.2"
+ "tls-rustls", "macros", "time" ] }
+chrono = { version = "0.4.40", features = ["serde"] }
 arc-swap = "1.7.1"
 axum-macros = "0.5.0"
-chrono = "0.4.40"
+time = "0.3.39"
